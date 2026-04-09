@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forrest Gump Bootstrap Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<h1 style="text-align:center;">Forrest Gump Bootstrap Buttons</h1>
+
+<div class="container" style="border: 2px solid black;">
+    <p>Choose a question from below.</p>
+
+    <div class="btn-group">
+        <button class="qBtn btn btn-sm btn-info m-2" num="1">Question #1</button>
+        <button class="qBtn btn btn-sm btn-info m-2" num="2">Question #2</button>
+        <button class="qBtn btn btn-sm btn-info m-2" num="3">Question #3</button>
+    </div>
+
+    <p>
+        <span id="question">Where does Forrest Gump take place?</span>
+        <span id="answer" style="padding:3px; color:pink"></span>
+    </p>
+
+    <div class="d-grid gap-2 d-md-block">
+        <button class="ansBtn btn btn-outline-primary m-1">Oxford, Mississippi</button>
+        <button class="ansBtn btn btn-outline-primary m-1">Greenbow, Alabama</button>
+        <button class="ansBtn btn btn-outline-primary m-1">Farmerville, Louisiana</button>
+    </div>
+
+    <hr>
+
+    <p>What is the name of the business Forrest opens?</p>
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="quote" id="ra1">
+        <label class="form-check-label" for="ra1">Gump Fishing Company</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="quote" id="ra2">
+        <label class="form-check-label" for="ra2">Gump's Shrimp Shack</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="quote" id="ra3">
+        <label class="form-check-label" for="ra3">Bubba Gump Shrimp Company</label>
+    </div>
+
+    <button class="btn btn-primary mt-2" id="checkRadio">Check Answer</button>
+    <p id="radioAnswer" style="color:pink;"></p>
+
+    <hr>
+
+    <p>Which of these activities did Forrest do in the movie?</p>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="cb1">
+        <label class="form-check-label" for="cb1">Played ping pong</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="cb2">
+        <label class="form-check-label" for="cb2">Ran across the country</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="cb3">
+        <label class="form-check-label" for="cb3">Became a politician</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="cb4">
+        <label class="form-check-label" for="cb4">Served in the military</label>
+    </div>
+
+    <button class="btn btn-success mt-2 mb-3" id="checkBoxes">Check Answer</button>
+    <p id="checkAnswer" style="color:pink;"></p>
+</div>
+
+<script>
+let questions = {
+    1: {
+        question: "What actor plays Forrest Gump?",
+        answers: ["Tom Hanks", "Matt Damon", "Brad Pitt"],
+        correct: "Tom Hanks"
+    },
+    2: {
+        question: "What sport is Forrest good at?",
+        answers: ["Ping pong", "Football", "Tennis"],
+        correct: "Ping pong"
+    },
+    3: {
+        question: "Who is Forrest's childhood friend?",
+        answers: ["Jenny", "Rachel", "Emily"],
+        correct: "Jenny"
+    }
+};
+
+let currentQuestion = 1;
+let qBtns = document.querySelectorAll(".qBtn");
+let ansBtns = document.querySelectorAll(".ansBtn");
+let question = document.getElementById("question");
+let answer = document.getElementById("answer");
+
+function loadQuestion(num) {
+    currentQuestion = num;
+    question.textContent = questions[num].question;
+    answer.textContent = "";
+
+    for (let i = 0; i < ansBtns.length; i++) {
+        ansBtns[i].textContent = questions[num].answers[i];
+    }
+}
+
+qBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+        let num = this.getAttribute("num");
+        loadQuestion(num);
+    });
+});
+
+ansBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+        if (this.textContent == questions[currentQuestion].correct) {
+            answer.textContent = "Correct";
+        } else {
+            answer.textContent = "Incorrect";
+        }
+    });
+});
+
+document.getElementById("checkRadio").addEventListener("click", function() {
+    let radioAnswer = document.getElementById("radioAnswer");
+
+    if (document.getElementById("ra3").checked) {
+        radioAnswer.textContent = "Correct";
+    } else {
+        radioAnswer.textContent = "Incorrect";
+    }
+});
+
+document.getElementById("checkBoxes").addEventListener("click", function() {
+    let checkAnswer = document.getElementById("checkAnswer");
+
+    if (
+        document.getElementById("cb1").checked &&
+        document.getElementById("cb2").checked &&
+        document.getElementById("cb4").checked &&
+        !document.getElementById("cb3").checked
+    ) {
+        checkAnswer.textContent = "Correct";
+    } else {
+        checkAnswer.textContent = "Incorrect";
+    }
+});
+</script>
+
+</body>
+</html>
